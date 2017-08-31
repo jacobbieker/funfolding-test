@@ -70,9 +70,10 @@ class ClassicBinning(Binning):
         super(ClassicBinning, self).digitize()
         tup_label = np.zeros((len(X), self.n_dims), dtype=int)
         for dim_i in range(self.n_dims):
-            tup_label[:, dim_i] = np.digitize(x=X[:, dim_i],
-                                              bins=self.edges[dim_i],
-                                              right=right)
+            digi = np.digitize(x=X[:, dim_i],
+                               bins=self.edges[dim_i],
+                               right=right)
+            tup_label[:, dim_i] = digi
         return self.convert_tup_label(tup_label)
 
     def convert_tup_label(self, tup_label):
@@ -105,14 +106,14 @@ class ClassicBinning(Binning):
         return clone
 
     def __merge__(self,
-                   X,
-                   min_samples=None,
-                   max_bins=None,
-                   sample_weight=None,
-                   y=None,
-                   right=False,
-                   mode='closest',
-                   **kwargs):
+                  X,
+                  min_samples=None,
+                  max_bins=None,
+                  sample_weight=None,
+                  y=None,
+                  right=False,
+                  mode='closest',
+                  **kwargs):
         super(ClassicBinning, self).merge()
         n_merg_iterations = 0
         binned = self.digitize(X, right=right)
@@ -179,15 +180,14 @@ class ClassicBinning(Binning):
         return self
 
     def merge(self,
-               X,
-               min_samples=None,
-               max_bins=None,
-               sample_weight=None,
-               y=None,
-               right=False,
-               mode='closest',
-               inplace=False):
-
+              X,
+              min_samples=None,
+              max_bins=None,
+              sample_weight=None,
+              y=None,
+              right=False,
+              mode='closest',
+              inplace=False):
         if inplace:
             return self.__merge__(X=X,
                                   min_samples=min_samples,

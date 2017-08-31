@@ -155,8 +155,9 @@ class StandardLLH(LLH):
         return h_unreg + regularization_part * self.factor
 
     def evaluate_hesse_matrix(self, f):
+        raise NotImplementedError  # Bugged!
         super(StandardLLH, self).evaluate_hesse_matrix()
-        warnings.warn('Hessian is not tested!')
+        warnings.warn('Gradient is not tested!')
         g_est, f, f_reg = self.model.evaluate(f)
         H_unreg = np.dot(np.dot(self.model.A.T,
                                 np.diag(self.vec_g / g_est**2)),

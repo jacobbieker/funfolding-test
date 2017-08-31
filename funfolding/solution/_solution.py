@@ -153,7 +153,7 @@ class LLHSolutionMCMC(Solution):
                  n_threads=1,
                  random_state=None):
         super(LLHSolutionMCMC, self).__init__()
-        if not isinstance(random_state, np.random.RandomState):
+        if not isinstance(random_state, np.random.mtrand.RandomState):
             random_state = np.random.mtrand.RandomState(random_state)
         self.random_state = random_state
 
